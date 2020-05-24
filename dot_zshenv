@@ -1,0 +1,9 @@
+#! /usr/bin/env zsh
+
+#: Title        : .zshenv
+#: Author       : "Marc Jacobs" <github+dotfiles@marcja.com>
+#: Description  : Export environment variables for zsh
+
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
