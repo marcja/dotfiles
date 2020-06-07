@@ -9,7 +9,6 @@
 
 # Path to your oh-my-zsh installation.
 export ZSH="$XDG_DATA_HOME/oh-my-zsh"
-export HISTFILE="$XDG_CACHE_HOME/zsh/history"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -75,33 +74,36 @@ ZSH_THEME="marcja"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(brew docker emoji git github kubectl npm npx thefuck tmux vi-mode zsh-interactive-cd)
+plugins=(brew docker emoji git github kubectl npm npx ssh-agent tmux vi-mode zsh-interactive-cd)
 
 # Override default location of .zcompdump file
 ZSH_COMPDUMP="${XDG_CACHE_HOME:-${HOME}/.cache}/zsh/.zcompdump-${HOST/.*/}-${ZSH_VERSION}"
+
+# enable agent forwarding support
+zstyle :omz:plugins:ssh-agent agent-forwarding on
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-export EDITOR="code"
+## history
+
+export HISTFILE="$XDG_CACHE_HOME/zsh/history"
+setopt SHARE_HISTORY
+setopt EXTENDED_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_FIND_NO_DUPS
+
+## git
 
 export GIT_CEILING_DIRECTORIES=$HOME
 
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='code'
+fi
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -111,8 +113,10 @@ export GIT_CEILING_DIRECTORIES=$HOME
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias la="ls -lAh"
 alias less="less -FSRX"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 function gi() { curl -sLw n https://www.gitignore.io/api/$@ ;}
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
