@@ -102,7 +102,7 @@ export GIT_CEILING_DIRECTORIES=$HOME
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
-  export EDITOR='code'
+  export EDITOR='code -w'
 fi
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
@@ -113,7 +113,10 @@ fi
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias cm="chezmoi"
 alias less="less -FSRX"
+# keep screen awake until 1800 (6pm)
+alias nosleep="caffeinate -d sleep $(($(date -j 1800 +%s) - $(date +%s)))"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 function gi() { curl -sLw n https://www.gitignore.io/api/$@ ;}
